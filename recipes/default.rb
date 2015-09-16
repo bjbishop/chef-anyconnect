@@ -3,9 +3,8 @@ home = ::File.join(::Dir.home(me))
 
 include_recipe "catchall::webdav"
 
-execute "copy vpnsetup.dmg down from webdav" do
+execute "cp #{::File.join(node['webdav']['mount'], 'artifacts', 'vpnsetup.dmg')} #{::File.join(Chef::Config[:file_cache_path], 'vpnsetup.dmg')}" do
   action :run
-  command "cp #{node['webdav']['mount']}/artifacts/vpnsetup.dmg #{::File.join(Chef::Config[:file_cache_path], 'vpnsetup.dmg')}"
   creates ::File.join(Chef::Config[:file_cache_path], 'vpnsetup.dmg')
   user node['current_user']
   retries 10
